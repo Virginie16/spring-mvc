@@ -15,8 +15,9 @@ import java.util.*;
  * cette annotation fait d'elle un bean qui sera instancié et disponible dans "ApplicationContext".
  * Cette instance pourra être utilisée n'importe où via le mécanisme d'injection de dépendance.
  * 
- * TODO ajoutez l'annotation @Component à cette classe pour qu'elle puisse être ajoutée au "ApplicationContext" et utilisé pour l'injection de dépendance
+ * Ajoutez l'annotation @Component à cette classe pour qu'elle puisse être ajoutée au "ApplicationContext" et utilisé pour l'injection de dépendance
  */
+@Component
 public class Notes {
     /**
      * Table de hachage qui contiendra toutes les informations concernant les notes
