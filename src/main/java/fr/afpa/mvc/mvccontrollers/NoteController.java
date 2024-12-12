@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import fr.afpa.mvc.data.Notes;
 import fr.afpa.mvc.model.Note;
 
+import java.util.List;
+
 /**
  * Le {@link NoteController} est un contrôleur d'application Spring MVC qui alimente une interface utilisateur
  * permettant d'afficher et d'ajouter des notes. 
@@ -34,7 +36,7 @@ public class NoteController {
     }
 
     /**
-     * TODO implémenter un méthode permettant de répondre à des requêtes HTTP "GET".
+     *  implémenter un méthode permettant de répondre à des requêtes HTTP "GET".
      * Cette méthode devra :
      * 1. récupérer les notes disponibes dans la classe "Notes"
      * 2. modifier l'objet de la classe "Model" permettant de communiquer des données à la vue
@@ -44,21 +46,34 @@ public class NoteController {
      * 
      * Pour vous aider, un exemple de méthode de controller : https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller.html
      */
+    @GetMapping
+    public String getNotes(Model model) {
+        // 1. Récupérer les notes disponibles dans la classe "Notes"
+        List<Note> noteList = notes.getAll();  // Suppose que Notes a une méthode getAllNotes()
+
+        // 2. Ajouter la liste des notes à l'objet Model
+        model.addAttribute("noteList", noteList);
+
+        // 3. Retourner la vue nommée "notes"
+        return "notes";  // Le nom de la vue est "notes", qui correspond à "notes.html"
+    }
 
 
     /**
-     * TODO Compléter la méthode ci-dessous pour gérer la création d'une note via une requête "POST".
-     * TODO analyser la requête http effectuée lors de la création de la note. Que contient le "body" ?
+     *  Compléter la méthode ci-dessous pour gérer la création d'une note via une requête "POST".
+     *  analyser la requête http effectuée lors de la création de la note. Que contient le "body" ?
      * 
-     * @param note La note à créer, les données proviennet du "body" de la requête http
+     * @param note La note à créer, les données proviennent du "body" de la requête http
      * @return Le nom de la vue à rendre
      */
     @PostMapping
     public String addNote(Note note) {
-        // TODO ajouter la nouvelle note à la collection
-        
-        // TODO effectuer une redirection vers la vue "notes" pour rafraichir la page
+        //  ajouter la nouvelle note à la collection
+        // 1. Ajouter la nouvelle note à la collection
+        notes.add(note);
+        //  effectuer une redirection vers la vue "notes" pour rafraichir la page
         // Documentation -> https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/redirecting-passing-data.html
-        return "";
+        // 2. Rediriger vers la vue "notes" pour rafraichir la page
+        return "redirect:/notes";
     }
 }

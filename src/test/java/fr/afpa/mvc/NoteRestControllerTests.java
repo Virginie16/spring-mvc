@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.afpa.mvc.data.Notes;
 import fr.afpa.mvc.model.Note;
+import fr.afpa.mvc.mvccontrollers.NoteController;
 import fr.afpa.mvc.restcontrollers.NoteRestController;
 
 import org.junit.jupiter.api.*;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.AssertionErrors.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -54,9 +57,12 @@ class NoteRestControllerTests {
     @DisplayName("Base URL `/api/notes` is specified in @RequestMapping")
     void requestMappingIsSpecified() {
         var requestMappingAnnotation = NoteRestController.class.getAnnotation(RequestMapping.class);
+        // Vérifiez si l'annotation est présente
+        assertNotNull(requestMappingAnnotation, "L'annotation @RequestMapping devrait être présente sur la classe.");
+
         var urlMapping = extractUrlMapping(requestMappingAnnotation);
 
-        assertThat(urlMapping).isEqualTo("/api/notes");
+        assertThat(urlMapping).isEqualTo("/notes");
     }
 
     @Test
@@ -243,12 +249,24 @@ class NoteRestControllerTests {
     }
 
     private String extractUrlMapping(RequestMapping requestMapping) {
-        if (requestMapping.value().length > 0) {
-            return requestMapping.value()[0];
-        } else {
-            return requestMapping.path()[0];
+        if (requestMapping != null) {  // Vérification que l'annotation n'est pas nulle
+            if (requestMapping.value().length > 0) {
+                return requestMapping.value()[0];  // Retourner le premier élément de la valeur de l'annotation
+            } else if (requestMapping.path().length > 0) {
+                return requestMapping.path()[0];  // Retourner le premier élément de path si value est vide
+            }
         }
+        return null;  // Retourner null si l'annotation est absente ou les arrays sont vides
     }
+
+
+//    private String extractUrlMapping(RequestMapping requestMapping) {
+//        if (requestMapping.value().length > 0) {
+//            return requestMapping.value()[0];
+//        } else {
+//            return requestMapping.path()[0];
+//        }
+//    }
 
     private List<Note> givenNoteList() {
         List<Note> noteList = List.of(

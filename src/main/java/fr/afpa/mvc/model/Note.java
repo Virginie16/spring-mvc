@@ -36,16 +36,20 @@ public class Note {
     }
 
     /**
-     * TODO implémenter la méthode qui sera appelée pour formatter la date correctement sur l'interface graphique
+     * implémenter la méthode qui sera appelée pour formatter la date correctement sur l'interface graphique
      * Exemple de format : 17/04/2025 - 10:30
      * 
      * @return La date correctement formatée
      */
     @JsonIgnore
     public String getStringFormatedCreatedOn() {
-        // TODO formatter la date correctement
+        // formatter la date correctement
         // Documentation utile -> https://www.baeldung.com/java-datetimeformatter#4-datetimeformatter-using-locales
-        return ""; 
+        // Définir le format souhaité
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
+
+        // Formater la date
+        return createdOn.format(formatter);
     }
 
     public UUID getId() {
