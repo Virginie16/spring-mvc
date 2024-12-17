@@ -83,4 +83,9 @@ public class Note {
     public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
+
+    @Override
+    public String toString() {
+        return "Note{id=" + id + ", title='" + title + "', text='" + text + "'}";
+    }
 }

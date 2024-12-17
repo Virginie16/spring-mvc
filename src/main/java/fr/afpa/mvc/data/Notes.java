@@ -1,5 +1,6 @@
 package fr.afpa.mvc.data;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Component;
 
 import fr.afpa.mvc.model.Note;
@@ -45,5 +46,38 @@ public class Notes {
         // initialisation de la date de création avec la date actuelle
         note.setCreatedOn(LocalDateTime.now());
         notesMap.put(note.getId(), note);
+    }
+
+    /**
+     * Sauvegarde une note dans la collection. Si l'ID de la note est déjà présent, la note est mise à jour.
+     * @param note La note à sauvegarder (ajouter ou mettre à jour).
+     * @return La note après l'ajout ou la mise à jour.
+     */
+    public Note save(Note note) {
+        // Si l'ID de la note est null (c'est une nouvelle note), on l'ajoute
+        if (note.getId() == null) {
+            add(note);
+        } else {
+            // Sinon, on met à jour la note existante
+            notesMap.put(note.getId(), note);
+        }
+        return note;
+    }
+
+    /**
+     * Récupère une note par son identifiant unique (UUID).
+     * @param id L'UUID de la note à rechercher.
+     * @return La note correspondante ou null si elle n'existe pas.
+     */
+    public Note getById(UUID id) {
+        return notesMap.get(id);
+    }
+
+    /**
+     * Supprime une note par son identifiant unique.
+     * @param id L'UUID de la note à supprimer.
+     */
+    public void delete(UUID id) {
+        notesMap.remove(id);
     }
 }

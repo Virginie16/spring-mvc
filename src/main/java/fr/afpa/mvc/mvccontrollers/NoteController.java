@@ -36,9 +36,9 @@ public class NoteController {
     }
 
     /**
-     *  implémenter un méthode permettant de répondre à des requêtes HTTP "GET".
+     *  Implémenter une méthode permettant de répondre à des requêtes HTTP "GET".
      * Cette méthode devra :
-     * 1. récupérer les notes disponibes dans la classe "Notes"
+     * 1. récupérer les notes disponibles dans la classe "Notes"
      * 2. modifier l'objet de la classe "Model" permettant de communiquer des données à la vue
      * 3. retourner la vue nommées "notes"
      * 
@@ -61,7 +61,7 @@ public class NoteController {
 
     /**
      *  Compléter la méthode ci-dessous pour gérer la création d'une note via une requête "POST".
-     *  analyser la requête http effectuée lors de la création de la note. Que contient le "body" ?
+     *  Analyser la requête http effectuée lors de la création de la note. Que contient le "body" ?
      * 
      * @param note La note à créer, les données proviennent du "body" de la requête http
      * @return Le nom de la vue à rendre
